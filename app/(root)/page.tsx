@@ -8,7 +8,7 @@ const page = async () => {
 
   console.log(session);
   return (
-    <div className="min-h-[100dvh] bg-black pt-[96px] md:h-full">
+    <div className="min-h-[100dvh] bg-black md:h-full">
       <h1 className="text-red-600">Welcome!</h1>
     </div>
   );
