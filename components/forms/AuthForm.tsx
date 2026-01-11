@@ -57,7 +57,7 @@ const AuthForm = <T extends FieldValues>({ schema, defaultValues, formType, onSu
 
             return (
               <Field key={key} className="flex w-full flex-col gap-2.5">
-                <FieldLabel htmlFor={key} className="parageaph-medium text-dark400_light700">
+                <FieldLabel htmlFor={key} className="paragraph-medium text-dark400_light700">
                   {key === "email" ? "Email Address" : key.charAt(0).toUpperCase() + key.slice(1)}
                 </FieldLabel>
 
