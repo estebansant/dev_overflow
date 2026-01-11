@@ -2,17 +2,25 @@
 
 import { AskQuestionSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useRef } from "react";
+import { useForm, Controller } from "react-hook-form";
 import * as z from "zod";
 
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
+import { MDXEditorMethods } from "@mdxeditor/editor";
+import dynamic from "next/dynamic";
 
 type QuestionFormData = z.infer<typeof AskQuestionSchema>;
 
+const Editor = dynamic(() => import("@/components/editor"), {
+  // Make sure we turn SSR off
+  ssr: false,
+});
+
 const QuestionForm = () => {
+  const editorRef = useRef<MDXEditorMethods>(null);
   const form = useForm<QuestionFormData>({
     resolver: zodResolver(AskQuestionSchema),
     defaultValues: {
@@ -25,6 +33,7 @@ const QuestionForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     setValue,
     watch,
     trigger,
@@ -64,7 +73,15 @@ const QuestionForm = () => {
             <FieldLabel htmlFor="content" className="paragraph-semibold text-dark400_light800">
               Detailed explanation of your problem <span className="text-primary-500">*</span>
             </FieldLabel>
-            Editor
+            <Controller
+              name="content"
+              control={control}
+              render={({ field }) => (
+                <div className="paragraph-regular background-light700_dark300 light-border-2 text-dark300_light700 min-h-[350px] rounded-md border">
+                  <Editor value={field.value} fieldChange={field.onChange} editorRef={editorRef} />
+                </div>
+              )}
+            />
           </Field>
 
           <FieldDescription className="body-regular text-light-500 mt-2.5">
