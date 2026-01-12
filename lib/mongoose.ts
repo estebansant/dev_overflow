@@ -21,7 +21,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-// Easiest way to maintain a connection open with MongoDB
+// Easiest way to stablish and maintain a connection open with MongoDB
 const dbConnect = async (): Promise<Mongoose> => {
   if (cached.conn) {
     return cached.conn;
